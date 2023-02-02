@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('name', 'username');
+        Schema::table('books', function (Blueprint $table) {
+            $table->foreignId("user_id");
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('username', 'name');
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropForeign("user_id");
         });
     }
 };
