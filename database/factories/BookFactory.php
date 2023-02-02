@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Genre;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "name" => $this->faker->slug(),
+            "genre_id" => Genre::factory(),
+            "title" => $this->faker->title(),
+            "author" => $this->faker->firstName(),
+            "description" => $this->faker->sentence(),
+            "user_id" => User::factory(),
         ];
     }
 }
