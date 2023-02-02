@@ -21,7 +21,7 @@ class BookFactory extends Factory
         return [
             "name" => $this->faker->slug(),
             "genre_id" => Genre::factory(),
-            "title" => $this->faker->title(),
+            "title" => $this->faker->word(),
             "author" => $this->faker->firstName(),
             "description" => $this->faker->sentence(),
             "user_id" => User::factory(),
