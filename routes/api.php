@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\BookController2;
 use App\Http\Controllers\UserBookController;
 use App\Http\Controllers\UserController;
@@ -29,3 +30,5 @@ Route::resource('books', BookController2::class);
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('users/{id}/books', [UserBookController::class, 'index'])->name('users.books.index');
+
+Route::post('/register', [AuthController::class, 'register']);
