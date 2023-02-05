@@ -19,12 +19,13 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            "name" => $this->faker->slug(),
-            "genre_id" => Genre::factory(),
             "title" => $this->faker->word(),
             "author" => $this->faker->firstName(),
             "description" => $this->faker->sentence(),
+            "name" => $this->faker->slug(),
             "user_id" => User::factory(),
+            "genre_id" => Genre::factory(),
+
         ];
     }
 }

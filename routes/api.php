@@ -22,13 +22,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('/books/{id}', [BookController::class, 'show']);
+//Route::get('/books/{id}', [BookController::class, 'show']);
 // Route::get('/books', [BookController::class, 'index']);
 
-Route::resource('books', BookController2::class);
+//Route::resource('books', BookController2::class);
 
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('users/{id}/books', [UserBookController::class, 'index'])->name('users.books.index');
 
+
+
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function (Request $request) {
+        return auth()->user();
+    });
+
+    Route::resource('books', BookController2::class)->only(['store', 'update', 'destroy']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::resource('books', BookController2::class)->only(['index']);

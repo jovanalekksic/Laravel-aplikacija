@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $validator = Validator::make($$request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8'
@@ -33,5 +33,24 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer',]);
+    }
+
+    public function login(Request $request)
+    {
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(['message' => 'Unauthorised'], 404);
+        }
+
+        $user = User::where('email', $request['email'])->firstOrFail();
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'access_token' => $token, 'token_type' => 'Bearer',]);
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'You have logged out. The Token was deleted'
+        ];
     }
 }
